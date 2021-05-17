@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="user-info-head" @click="editCropper()"><img v-bind:src="options.img" title="点击上传头像" class="img-circle img-lg" /></div>
-    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body @opened="modalOpened">
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body @opened="modalOpened"  @close="closeDialog()">
       <el-row>
         <el-col :xs="24" :md="12" :style="{height: '350px'}">
           <vue-cropper
@@ -27,7 +27,7 @@
         <el-col :lg="2" :md="2">
           <el-upload action="#" :http-request="requestUpload" :show-file-list="false" :before-upload="beforeUpload">
             <el-button size="small">
-              上传
+              选择
               <i class="el-icon-upload el-icon--right"></i>
             </el-button>
           </el-upload>
@@ -136,6 +136,11 @@ export default {
     // 实时预览
     realTime(data) {
       this.previews = data;
+    },
+    // 关闭窗口
+    closeDialog() {
+      this.options.img = store.getters.avatar
+	  this.visible = false;
     }
   }
 };
